@@ -1,0 +1,36 @@
+---
+title: "SARS-CoV-2 Non-human Shifts "
+output: flexdashboard::flex_dashboard
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(shiny)
+library(flexdashboard)
+library(ape)
+library(phylocanvas)
+```
+
+Column {.sidebar data-width=300}
+-----------------------------------------------------------------------
+
+Upload your data here.
+
+```{r}
+fileInput("newick", label = "Sequence data:", buttonLabel = "Browse...", placeholder = "No file selected")
+
+textInput("species", label = "Species:")
+```
+
+Column
+-----------------------------------------------------------------------
+
+### SARS-CoV-2 Tree
+
+```{r}
+renderPlot({
+  tree <- read.tree(input$newick)
+  phylocanvas(input$newick,treetype = "rectangular", alignlabels = T)
+})
+```
+```
