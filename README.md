@@ -15,7 +15,12 @@ We provide a variety of non-human sequences, and allow the user to upload a sequ
 
 Host shifts will be identified as the novel sequence being placed in clades of other sequences of host-shift sequences, such as that of the human-mink shift in fall 2020.
 
+## Pipeline & Outline
+
+![pipeline](./Codeathon_v2.png)
+
 ## Methods and Implementation
+
 
 
 
