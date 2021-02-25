@@ -25,6 +25,25 @@ We implemented the dashboard using an R package called flexdashboard, which allo
 
 We provided a set of whole-genome Covid sequences that covered a variety of known human to non-human host shifts. These include the following species (ferret, mink, tiger, more).
 
-## Results 
+## Results
+
+## Installation & Running
+
+The main program is an Rshiny app. Therefore, you will need both a base R installation, as well as Rstudio. Once you have those downloaded, you will need to install the following packages:
+
+phangorn
+ape
+DECIPHER
+shiny
+flexdashboard
+phylocanvas
+
+If you want to use some of the auxillary programs, the following packages are also required
+fs
+readr
+purrr
+dplyr
+from bioconductor
+Biostrings
 
 What did we find?
