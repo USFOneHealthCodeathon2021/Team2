@@ -27,6 +27,8 @@ We provided a set of whole-genome Covid sequences that covered a variety of know
 
 ## Results
 
+What did we find?
+
 ## Installation & Running
 
 The main program is an Rshiny app. Therefore, you will need both a base R installation, as well as Rstudio. Once you have those downloaded, you will need to install the following packages:
@@ -46,4 +48,4 @@ dplyr
 from bioconductor
 Biostrings
 
-What did we find?
+
