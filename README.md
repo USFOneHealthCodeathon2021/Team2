@@ -33,19 +33,19 @@ What did we find?
 
 The main program is an Rshiny app. Therefore, you will need both a base R installation, as well as Rstudio. Once you have those downloaded, you will need to install the following packages:
 
-phangorn
-ape
-DECIPHER
-shiny
-flexdashboard
-phylocanvas
+phangorn\n
+ape\n
+DECIPHER\n
+shiny\n
+flexdashboard\n
+phylocanvas\n
 
 If you want to use some of the auxillary programs, the following packages are also required
-fs
-readr
-purrr
-dplyr
-from bioconductor
-Biostrings
+fs\n
+readr\n
+purrr\n
+dplyr\n
+from bioconductor\n
+Biostrings\n
 
 
