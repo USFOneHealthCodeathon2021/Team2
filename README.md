@@ -23,7 +23,7 @@ Host shifts will be identified as the novel sequence being placed in clades of o
 
 We implemented the dashboard using an R package called flexdashboard, which allowed us to focus more of us efforts on the other individual components. Namely, the input, alignment, phylogenetic tree and visualization. The alignment was a custom Matlab script provided by one of the team members, Morgan Young. The tree estimation was done using the R package phangorn. Visualization of the tree was done using phylocanvas.
 
-We provided a set of whole-genome Covid sequences that covered a variety of known human to non-human host shifts. These include the following species (ferret, mink, tiger, more).
+We provided a set of whole-genome Covid sequences that covered a variety of known human to non-human host shifts. These include the following species (ferret, mink, tiger,lion, more).
 
 ## Results
 
