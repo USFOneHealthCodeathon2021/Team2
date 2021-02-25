@@ -2,7 +2,7 @@
 ---
 **Team Leaders**: Thomas Keller, Swamy Rakesh Adapa 
 
-**Team Members**:  Atmaja	Koorapati, Celine	Atkinson, William	Cromwell, Vijay	Chauhan, Kyle	Koller,Soa Fy	Andriamandimby,Raul	Gonzalez, Morgan Young
+**Team Members**:  Atmaja	Koorapati, Celine	Atkinson, William	Cromwell, Vijay	Chauhan, Kyle	Koller, Soa Fy	Andriamandimby, Raúl	A. González-Pech, Morgan Young
 
 **GVN/USF mentors**:
 
