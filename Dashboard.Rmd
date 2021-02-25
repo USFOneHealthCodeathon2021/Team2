@@ -9,6 +9,8 @@ library(shiny)
 library(flexdashboard)
 library(ape)
 library(phylocanvas)
+#note, added phangorn for tree construction
+#library(phangorn)
 ```
 
 Column {.sidebar data-width=300}
@@ -28,6 +30,22 @@ Column
 ### SARS-CoV-2 Tree
 
 ```{r}
+#tree construction, uncomment when ready
+#also, may be slow? not sure at 30 seqs X 30kb
+#from the phangorn tutorial
+#https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.pdf
+
+#initial tree
+#dm  <- dist.ml(aln)
+#treeNJ <- NJ(dm)
+
+#ML tuning
+#fit <- pml(treeNJ, data=aln)
+#can also try ratchet/stochastic for rearrangement, but slower (better topology)
+#fitGTR <- optim.plm(fit, model="GTR",optInv=TRUE,optGamma=TRUE,
+#                    rearrangement="NNI",control=pml.control(trace=0))
+#todo, figure out how to extract the tree
+
 renderPlot({
   tree <- read.tree(input$newick)
   phylocanvas(input$newick,treetype = "rectangular", alignlabels = T)
