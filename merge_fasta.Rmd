@@ -18,15 +18,18 @@ fa_list=fa %>%map(readDNAStringSet)
 #get lengths of the fa files to make the names via rep
 name_length=lengths(fa_list)
 
-fa_names=c("panthera_tigris_jacksoni","panthera_leo","poland_mink","poland_human","canis_lupus","felis_catus","sars_cov2_wuhan_hu1_root","mink_ned","mink_ned","mink_ned","mink_ned","mink_ned","mink_ned","human_usa_wi","mink_usa_wi")
+fa_names=c("panthera_tigris_jacksoni","panthera_leo","poland_mink","poland_human","canis_lupus","felis_catus","sars_cov2_wuhan_hu1_root","mink","mink","mink","mink","mink","mink","human","mink")
 fa_rep=rep(fa_names,name_length)
-fa_meta=data.frame(species_loc=fa_rep)
-write_csv(fa_meta,"combined_zoo_metadata.csv")
+#fa_meta=data.frame(species_loc=fa_rep)
+
 #apparently the list cant have names or you cant combine
 #https://stackoverflow.com/questions/26303648/collapse-a-list-of-dnastringsets-into-a-single-dnastingset-in-order-to-apply-wri
 
 names(fa_list) <- NULL
 mergedfa=do.call(c,fa_list)
+seq_loc=rep(c(NA,"Poland",NA,"China","Netherlands","Wisconson-USA"),c(2,14+169,5+19,1,6,1949+47))
+fa_meta=data.frame(seqid=names(mergedfa),species=fa_rep,location=seq_loc)
+write_csv(fa_meta,"combined_zoo_metadata_3col.csv")
 writeXStringSet(mergedfa,"combined_zoo.fasta")
 
 
