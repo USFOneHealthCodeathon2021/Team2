@@ -1,8 +1,9 @@
-function [reps] = find_covid_alignments(seq1,seq2)
+function [] = find_covid_alignments(seq2)
 
-% MAKE SURE TO ASSIGN SEQ1 AS WUHAN SEQUENCE AND REMOVE ARGUMENT
+% INPUTS:
+% seq2: a string sequence of nucleotides
 
-%~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 % optimum parameters for covid viruses:
 min_len_inrep = 10;
@@ -10,6 +11,15 @@ match_len = 5;
 indel_len = 0;
 
 %~~~~~~~~~~~~~~~~~~~~~~~~
+
+% load the original Wuhan strain sequence:
+load('Hu.mat');
+seq1 = Hu;
+
+%~~~~~~~~~~~~~~~~~~~~~~~~
+
+seq1 = upper(seq1);
+seq2 = upper(seq2);
 
 % find nonoverlapping alignments, with both sequences first for
 % more completeness:
@@ -60,6 +70,10 @@ hold on
 
 title('Comparison of input CoVid sequence and original Wuhan strain sequence')
 xlabel('base pairs')
+XTick_vals = [0];
+XTick_labels = {'0'};
+set(gca,'XTick',XTick_vals)
+set(gca,'XTickLabels',XTick_labels)
 
 YTick_vals = [0.5, 2.5];
 YTick_labels = {'original Wuhan strain','input sequence'};
@@ -133,16 +147,16 @@ for r = 1:size(reps,1)
             else
                 bp = ['(',num2str(reps(r,2)+1),':',num2str(len1),')'];
             end
-            text(loc(size(loc,1),2)+spacer/2,0.5,[misalign1,' ',bp],'Rotation',90,'HorizontalAlignment','center','VerticalAlignment','bottom')
+            text(loc(size(loc,1),2)+spacer/2,0.5,[misalign1,' ',bp],'Rotation',90,'HorizontalAlignment','center')
         end
-        if reps(size(reps,1),2) < len1
+        if reps(size(reps,1),4) < len2
             misalign2 = seq2(reps(size(reps,1),4)+1:len2);
             if reps(r,4) == len2-1
                 bp = ['(',num2str(len2),')'];
             else
                 bp = ['(',num2str(reps(r,4)+1),':',num2str(len2),')'];
             end
-            text(loc(size(loc,1),4)+spacer/2,2.5,[misalign2,' ',bp],'Rotation',90,'HorizontalAlignment','center','VerticalAlignment','bottom')
+            text(loc(size(loc,1),4)+spacer/2,2.5,[misalign2,' ',bp],'Rotation',90,'HorizontalAlignment','center')
         end
     end
 end
