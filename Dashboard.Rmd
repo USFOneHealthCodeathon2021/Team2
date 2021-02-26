@@ -10,11 +10,15 @@ library(tidyverse)
 library(flexdashboard)
 library(ape)
 library(phangorn)
-library(phylocanvas)
+library(DECIPHER)
+library(tictoc)
+library(ggtree)
+library(plotly)
 ```
 
 ```{r global, include=FALSE}
 KnownSeqs <- read.dna("all_aligned.fasta", format = "fasta")
+
 KnownSeqsMeta <- read.table("metadata.csv", header = T, sep = ',')
 ```
 
@@ -27,13 +31,12 @@ Upload your data here.
 fileInput("sample", label = "Sequence data:", buttonLabel = "Browse...", placeholder = "No file selected")
 
 selectInput("species", label = "Select organism:",
-            choices = c("All", "canis_lupus", "felis_catus", "human", "mink",
-                        "panthera_leo", "panthera_tigris_jacksoni"), selected = "All")
+            choices = c("", "All", "canis_lupus", "felis_catus", "human", "mink",
+                        "panthera_leo", "panthera_tigris_jacksoni"), selected = "")
 
 selectInput("location", label = "Select location:",
-            choices = c("All", "Netherlands", "Poland", "sars_cov2_wuhan_hu1_root", "Wisconson-USA", "Unknown"),
-            selected = "All")
-
+            choices = c("", "All", "China", "Netherlands", "Poland", "Wisconsin-USA", "Unknown"),
+            selected = "")
 ```
 
 Column
@@ -47,43 +50,47 @@ renderTable({
 #renderPlot({
   if(input$species == "All" & input$location == "All"){
     DesiredSeqs <- KnownSeqs
-    DesiredIds <- names(KnownSeqs)
+    DesiredIds <- KnownSeqsMeta$seqids
   }else if(input$species == "All" & input$location != "All"){
-    DesiredIds <- KnownSeqsMeta %>% filter(location == input$location) %>% select(seqid)
+    DesiredIds <- KnownSeqsMeta %>% dplyr::filter(location == input$location) %>% select(seqid)
     DesiredIndex <- which(names(KnownSeqs) %in% DesiredIds)
     DesiredSeqs <- KnownSeqs[DesiredIndex]
   }else if(input$species != "All" & input$location == "All") {
-    DesiredIds <- KnownSeqsMeta %>% filter(species == input$species) %>% select(seqid)
+    DesiredIds <- KnownSeqsMeta %>% dplyr::filter(species == input$species) %>% select(seqid)
     DesiredIndex <- which(names(KnownSeqs) %in% DesiredIds)
     DesiredSeqs <- KnownSeqs[DesiredIndex]
-  }else{
-    DesiredIds <- KnownSeqsMeta %>% filter(species == input$species, location == input$species) %>% select(seqid)
+  }else if(length(input$species) & length(input$location)){
+    DesiredIds <- KnownSeqsMeta %>% dplyr::filter(species == input$species, location == input$location) %>% select(seqid)
     DesiredIndex <- which(names(KnownSeqs) %in% DesiredIds)
     DesiredSeqs <- KnownSeqs[DesiredIndex]
   }
-  #DesiredIds
-
+  DesiredIds
+  
 # Adding sample data
-  file <- input$sample
-  SampleSeq <- read.dna(file$datapath, format = "fasta")
-  AllSeqs <- cbind(as.matrix(DesiredSeqs), as.matrix(SampleSeq), fill.with.gaps = T)
-  names(AllSeqs)
-#})
-#tree construction, uncomment when ready
-#also, may be slow? not sure at 30 seqs X 30kb
-#from the phangorn tutorial
-#https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.pdf
-#initial tree
-  #msa <- phyDat(KnownSeqs, type = "DNA")
+  #file <- input$sample
+  #SampleSeq <- readDNAStringSet(file$datapath, format = "fasta")
+  #DesiredSeqsConv <- DesiredSeqs %>% as.list %>% as.character %>%
+   # lapply(., paste0, collapse = "") %>% unlist %>% DNAStringSet
+  #aligned <- AlignProfiles(DesiredSeqsConv, SampleSeq)
+  #names(as.DNAbin(aligned))
+  
+# Phylogenetic tree construction, uncomment when ready
+# Initial tree
+  #tic()
+  #msa <- phyDat(as.DNAbin(aligned), type = "DNA")
   #dm  <- dist.ml(msa)
   #treeNJ <- NJ(dm)
+  #ttime=toc
+  
 #ML tuning
 #fit <- pml(treeNJ, data=aln)
 #can also try ratchet/stochastic for rearrangement, but slower (better topology)
 #fitGTR <- optim.plm(fit, model="GTR",optInv=TRUE,optGamma=TRUE,
 #                    rearrangement="NNI",control=pml.control(trace=0))
-#todo, figure out how to extract the tree
 
-  #phylocanvas(treeNJ, treetype = "rectangular", alignlabels = T)
+# Plotting tree
+  #t <- ggtree(treeNJ)
+  #t
+  #ggplotly(t)
 })
 ```
